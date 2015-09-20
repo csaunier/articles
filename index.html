@@ -1,0 +1,256 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Les coordonnées en SVG</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/main.css">
+    </head>
+    <body>
+	
+		<div class="mainContent">
+		
+			<h1>Les coordonnées en SVG</h1>
+
+            <p>Selon le site can i use, SVG est maintenant reconnu par plus de 95.92% des naviguateurs présent sur le marché. Il
+            n'y a donc plus de raisons de ne pas adopter ce format. Si par malheur vous travaillez sur un projet
+            qui ne prendrais pas en compte cette statistique, et vous forcerez à supporter IE8 par exemple, un fallback en png
+            peut facilement être mis en place.</p>
+
+            <p>Ceci étant dit, cet article va ce concentrer sur le système de coordonnées et les parametres permettant de le modifier.
+            <br>Plus précisément, on va s'intéresser au "S" de svg, pour scalable, soit adaptable en français.</p>
+
+            <h2>Introduction</h2>
+
+            <p>
+                La balises svg créait une zone de dessins aux dimensions illimitées, c'est ce que l'on appel le <b>canvas</b>,
+                dont l'utilisateur ne verra qu'une partie,
+                un rectangle délimité par les attributs width et height de la balise. C'est ce rectangle que l'on appel le <b>viewport</b>.
+                <br>Il faut voir ça comme un écran de télévision, celui-ci
+                délimitant une zone d'affichage convenue, alors qu'un plateau de télévision est bien sur plus vaste.<br>
+                Sans plus d'informations fournies par diverses attribus, un système de coordonnées est mis en place, avec pour origine le coint supérieur
+                gauche du viewport.
+            </p>
+
+            <p>Je fais une petite pause pour évoquer un cas particulier : que ce passe t'il si l'on ommet ces attributs width et height ?</p>
+
+            <code class="svgExemple_code">
+                &lt;svg&gt;<br>
+                &lt;circle cx="50" cy="50" r="50" fill="#00a5ba"/&gt;<br>
+                &lt;circle cx="300" cy="50" r="50" fill="#ea2b51"/&gt;<br>
+                &lt;/svg&gt;
+            </code>
+
+            <svg>
+                <rect x="0" y="0" width="100%" height="100%" stroke="#ffb718" stroke-width="6" fill-opacity="0"/>
+                <circle cx="50" cy="50" r="50" fill="#00a5ba"/>
+                <circle cx="300" cy="50" r="50" fill="#ea2b51"/>
+            </svg>
+
+            <p>Sans précisez de width et de height, on se retrouve vite face à une première difficulté : Firefox et Chrome créaient un élement
+            de 300*150 pixels, tandis que Internet Explorer, Edge inclus, créait lui un élément de 100% de largeur, pour 150px de hauteur.</p>
+
+            <p>Pas la peine de prendre de risques, une bonne pratique sera de spécifier une largeur et une hauteur, que ce soit en css
+            ou directement sur la balise svg. C'est d'ailleur ce dernier cas que je vais utiliser pour les prochains exemples, histoire de
+                regrouper un maximum d'informations au même endroit.</p>
+
+            <p>Néammmoins, pas de surprises concernant le système de coordonnées, on a bien précisé que le centre du cercle bleu était à x=50 et y=50,
+                et visuellement on retrouve bien exactement ce résultat.</p>
+
+            <p>Maintenant, on va voir comment jouer avec ces coordonnées.</p>
+
+            <h2>L'attribut viewbox</h2>
+
+            <p>Pas de teasing, tout vas ce faire grâce à l'attribut viewbox. Si aucune valeur n'est précisé le viewport ne sera pas modifié,
+                et donc le système de coordonnées ne changera pas. Viewbox prends en valeur 4 paramètres :
+                <code class="svgExemple_code">
+                    viewBox = " &lt;min-x&gt; &lt;min-y&gt; &lt;width&gt; &lt;height&gt; "
+                </code>
+            </p>
+
+            <p>Ces 4 paramètres vont permettre de définir un rectangle qui va redéfinir le systéme de coordonnées du viewport.
+                Et c'est là que les choses deviennent interessantes.
+                L'<b>échelle</b> ( <b>scale</b> ) pourra être modifié et être supérieur ou inférieur à la valeur de base 1:1, mais toujours de façon à faire rentrer,
+                ou plutôt à contraindre le viewbox dans le viewport.</p>
+
+            <p>Petit apparté visuel sur les bordures des exemples qui vont suivres pour mieux comprendre mes propos :
+                <ul>
+                    <li>Le cadre gris foncé représentera les limites du svg, donc le viexport et est fixé en css</li>
+                    <li>Le cadre jaune représente lui le viewbox, c'est un le contour d'un rectangle qui fait toujours les dimensions du viewbox.
+                    Son contour est de 6px, 3 à l'extérieur, et 3 à l'intérieur de l'élément rect.</li>
+                </ul>
+            </p>
+
+            <h3>Modification de l'échelle de façon homothétique</h3>
+
+            <table class="svgExemple_table">
+                <tr class="svgExemple_line">
+                    <td class="svgExemple_svg">
+                        <svg width="150" height="150" viewbox="0 0 150 150">
+                            <rect x="0" y="0" width="100%" height="100%" stroke="#ffb718" stroke-width="6" fill-opacity="0"/>
+                            <circle cx="50" cy="50" r="50" fill="#00a5ba"/>
+                            <circle cx="300" cy="50" r="50" fill="#ea2b51"/>
+                        </svg>
+                    </td>
+                    <td class="svgExemple_explanation">
+                        <code class="svgExemple_code">
+                            &lt;svg width="150" height="150" viewbox="0 0 150 150" /&gt;
+                        </code>
+                        <p>Pas de surprise, c'est l'exemple de base, le viewbox est précisé et fait les mêmes dimensions que le viewport.
+                            Le rond bleu à bien un diamètre de 100, et le rond rose n'est pas visible.</p>
+                    </td>
+                </tr>
+                <tr class="svgExemple_line">
+                    <td class="svgExemple_svg">
+                        <svg width="150" height="150" viewbox="0 0 300 300">
+                            <rect x="0" y="0" width="100%" height="100%" stroke="#ffb718" stroke-width="6" fill-opacity="0"/>
+                            <circle cx="50" cy="50" r="50" fill="#00a5ba"/>
+                            <circle cx="300" cy="50" r="50" fill="#ea2b51"/>
+                        </svg>
+                    </td>
+                    <td class="svgExemple_explanation">
+                        <code class="svgExemple_code">
+                            &lt;svg width="150" height="150" viewbox="0 0 300 300" /&gt;
+                        </code>
+                        <p>Cette fois le viewbox représente 2x le viewport. Il en résulte donc une surface d'affichage 2x fois plus large,
+                        mais toujours dans le même viewport. L'échelle est donc inférieur, ici 1:2, les cercles apparaissent 2 fois plus petits,
+                        et le rose est cette fois visible</p>
+                    </td>
+                </tr>
+                <tr class="svgExemple_line">
+                    <td class="svgExemple_svg">
+                        <svg width="150" height="150" viewbox="0 0 100 100">
+                            <rect x="0" y="0" width="100%" height="100%" stroke="#ffb718" stroke-width="6" fill-opacity="0"/>
+                            <circle cx="50" cy="50" r="50" fill="#00a5ba"/>
+                            <circle cx="300" cy="50" r="50" fill="#ea2b51"/>
+                        </svg>
+                    </td>
+                    <td class="svgExemple_explanation">
+                        <code class="svgExemple_code">
+                            &lt;svg width="150" height="150" viewbox="0 0 100 100" /&gt;
+                        </code>
+                        Cette fois-ci, le viewbox est inférieur au viewport. L'échelle est aussi modifié à 3:2, le rond bleu prends cette fois
+                        toute la place disponible, soit un diamètre de 100 * 3 / 2 = 150, ce qui corresponds bien aux largeurs et hauteurs du viewport.
+                    </td>
+                </tr>
+
+            </table>
+
+            <p>Ces 3 exemples ont été fait en précisant un viewbox homothétique au viewport, maintenant, essayons en changeant cela.</p>
+
+            <h3>Modification de l'échelle de façon non homothétique</h3>
+
+            <table class="svgExemple_table">
+                <tr class="svgExemple_line">
+                    <td class="svgExemple_svg">
+                        <svg width="150" height="150" viewbox="0 0 150 100">
+                            <rect x="0" y="0" width="100%" height="100%" stroke="#ffb718" stroke-width="6" fill-opacity="0"/>
+                            <circle cx="50" cy="50" r="50" fill="#00a5ba"/>
+                            <circle cx="300" cy="50" r="50" fill="#ea2b51"/>
+                        </svg>
+                    </td>
+                    <td class="svgExemple_explanation">
+                        <code class="svgExemple_code">
+                            &lt;svg width="150" height="150" viewbox="0 0 150 100" /&gt;
+                        </code>
+                        <p>L'échelle sur l'axe x n'est pas modifié, puisque la largeur du viewbox est la même que celle du viewport.<br>Ce qui
+                        est intéressant ici, c'est que l'échelle sur l'axe y n'est pas modifié non plus, puisque le rond n'est pas écrasé. Le
+                        ratio est préservé. Nous verrons plus tard que l'attribut <b>preserveAspectRatio</b> permet de jouer avec cela.<br>
+                        Une dernière chose bien visible est que le viewport ce retrouve centrer verticalement dans le viewport. PreserveAspectRatio aura
+                        à nouveau son mot à dire sur cette caractéristique.</p>
+                    </td>
+                </tr>
+                <tr class="svgExemple_line">
+                    <td class="svgExemple_svg">
+                        <svg width="150" height="150" viewbox="0 0 200 300">
+                            <rect x="0" y="0" width="100%" height="100%" stroke="#ffb718" stroke-width="6" fill-opacity="0"/>
+                            <circle cx="50" cy="50" r="50" fill="#00a5ba"/>
+                            <circle cx="300" cy="50" r="50" fill="#ea2b51"/>
+                        </svg>
+                    </td>
+                    <td class="svgExemple_explanation">
+                        <code class="svgExemple_code">
+                            &lt;svg width="150" height="150" viewbox="0 0 200 300" /&gt;
+                        </code>
+                        <p>Sur cette exemple, l'échelle a été modifié, puisque n'y la largeur, n'y la hauteur du viewbox ne correspondaient au viewport.
+                        Par contre le ratio entre l'axe x et y reste le même, le rond n'est toujours pas déformé, et on peut se rendre compte que
+                            cette fois, le viewbox est centré horizontalement dans le viewport.</p>
+                    </td>
+                </tr>
+            </table>
+
+
+            <h3>La translation</h3>
+
+            <p>Jusqu'à maintenant, on avait pas modifié min-x, et min-y. Et bien c'est parti.</p>
+
+            <table class="svgExemple_table">
+                <tr class="svgExemple_line">
+                    <td class="svgExemple_svg">
+                        <svg width="150" height="150" viewbox="50 -50 150 150">
+                            <rect x="0" y="0" width="100%" height="100%" stroke="#ffb718" stroke-width="6" fill-opacity="0"/>
+                            <circle cx="50" cy="50" r="50" fill="#00a5ba"/>
+                            <circle cx="300" cy="50" r="50" fill="#ea2b51"/>
+                        </svg>
+                    </td>
+                    <td class="svgExemple_explanation">
+                        <code class="svgExemple_code">
+                            &lt;svg width="150" height="150" viewbox="50 -50 150 150" /&gt;
+                        </code>
+                        <p>Préciser une valeur autre que 0 a min-x et min-y entraine un décalage du viewbox. Plus précisément, une <b>translation</b> ( <b>translate</b> ) va faire
+                            concordé les coordonnées x = 50 et le y = -50 du viewport avec le point d'origine du viewport. Dans notre exemple, il en résulte donc
+                            un translate(-50, 50).<br>
+                        A noter que sur cette exemple, le viewbox est identique au viewport, et seul une translation est effectuée.</p>
+                    </td>
+                </tr>
+                <tr class="svgExemple_line">
+                    <td class="svgExemple_svg">
+                        <svg width="150" height="150" viewbox="50 50 300 300">
+                            <rect x="0" y="0" width="100%" height="100%" stroke="#ffb718" stroke-width="6" fill-opacity="0"/>
+                            <circle cx="50" cy="50" r="50" fill="#00a5ba"/>
+                            <circle cx="300" cy="50" r="50" fill="#ea2b51"/>
+                        </svg>
+                    </td>
+                    <td class="svgExemple_explanation">
+                        <code class="svgExemple_code">
+                            &lt;svg width="150" height="150" viewbox="50 50 300 300" /&gt;
+                        </code>
+                        <p>Dans ce cas, et comme déjà vu un peu plus haut, la zone d'affichage est 2 fois plus grande vu que l'échelle est devenu plus petite.
+                        La translation est également là, mais parait 2 fois moins importante. Visuellement, c'est le cas.<br>
+                        Ce qui ce passe, c'est que l'échelle est modifié en premier, et la translation s'effectue sur cette nouvelle échelle. Visuellement,
+                        on voit bien un décalage de 25 pixels correspondant aux informations renseignées dans l'attribut viewbox.</p>
+                    </td>
+                </tr>
+                <tr class="svgExemple_line">
+                    <td class="svgExemple_svg">
+                        <svg width="150" height="150" viewbox="75 0 150 300">
+                            <rect x="0" y="0" width="100%" height="100%" stroke="#ffb718" stroke-width="6" fill-opacity="0"/>
+                            <circle cx="50" cy="50" r="50" fill="#00a5ba"/>
+                            <circle cx="300" cy="50" r="50" fill="#ea2b51"/>
+                        </svg>
+                    </td>
+                    <td class="svgExemple_explanation">
+                        <code class="svgExemple_code">
+                            &lt;svg width="150" height="150" viewbox="75 0 150 300" /&gt;
+                        </code>
+                        <p>Pour ce dernier exemple, je vais cumuler ce que l'on a vu jusqu'à maintenant. La hauteur du viewbox est deux fois celle du viewport,
+                        donc l'échelle est inférieur. En revanche, la largeur du viewbox est la meme que celle du viewport, et comme l'attribut preserveAspectRatio
+                        n'est pas précisé, le ratio entre l'axe x et l'axe y est préservé. Le viewbox fait donc visuellement 75 pixels de large et est centré dans
+                        le viewport. Ensuite, il y a une translation de 75 sur l'échelle du viewbox, soit visuellement de 37,5. Le point d'origine de la viewbox
+                        se retrouve donc maintenant confondu avec celui du viewport</p>
+                    </td>
+                </tr>
+            </table>
+
+            <p>Ce dernier exemple utilise une translation pour empecher de centre le viewbox dans le viewport. On va voir qu'il y a plus simple pour arriver au même résultat.</p>
+
+            <h2>preserveAspectRatio</h2>
+
+		</div>
+
+    </body>
+</html>

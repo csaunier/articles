@@ -1,1 +1,1 @@
-# articles
+Article sur les coordonnées en SVG.
