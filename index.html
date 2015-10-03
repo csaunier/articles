@@ -16,12 +16,12 @@
 		
 			<h1>Les coordonnées en SVG</h1>
 
-            <p>Selon le site can i use, SVG est maintenant reconnu par plus de 95.92% des naviguateurs présent sur le marché. Il
+            <p>Selon le site <a href="http://caniuse.com/#search=svg" target="_blank">can i use</a>, SVG est maintenant reconnu par plus de 95.92% des naviguateurs présent sur le marché. Il
             n'y a donc plus de raisons de ne pas adopter ce format. Si par malheur vous travaillez sur un projet
-            qui ne prendrais pas en compte cette statistique, et vous forcerez à supporter IE8 par exemple, un fallback en png
+            qui ne prendrais pas en compte cette statistique, et vous forcerez à supporter IE8 pour ne pas le siter, un fallback en png
             peut facilement être mis en place.</p>
 
-            <p>Ceci étant dit, cet article va ce concentrer sur le système de coordonnées et les parametres permettant de le modifier.
+            <p>Ceci étant dit, cet article va se concentrer sur le système de coordonnées et les paramêtres permettant de le modifier.
             <br>Plus précisément, on va s'intéresser au "S" de svg, pour scalable, soit adaptable en français.</p>
 
             <h2>Introduction</h2>
@@ -51,12 +51,11 @@
                 <circle cx="300" cy="50" r="50" fill="#ea2b51"/>
             </svg>
 
-            <p>Sans précisez de width et de height, on se retrouve vite face à une première difficulté : Firefox et Chrome créaient un élement
+            <p>Sans préciser de width et de height, on se retrouve vite face à une première difficulté : Firefox et Chrome créaient un élement
             de 300*150 pixels, tandis que Internet Explorer, Edge inclus, créait lui un élément de 100% de largeur, pour 150px de hauteur.</p>
 
             <p>Pas la peine de prendre de risques, une bonne pratique sera de spécifier une largeur et une hauteur, que ce soit en css
-            ou directement sur la balise svg. C'est d'ailleur ce dernier cas que je vais utiliser pour les prochains exemples, histoire de
-                regrouper un maximum d'informations au même endroit.</p>
+            ou directement sur la balise svg. C'est ce que je ferais pour les exemples qui vont suivre.</p>
 
             <p>Néammmoins, pas de surprises concernant le système de coordonnées, on a bien précisé que le centre du cercle bleu était à x=50 et y=50,
                 et visuellement on retrouve bien exactement ce résultat.</p>
@@ -79,8 +78,8 @@
 
             <p>Petit apparté visuel sur les bordures des exemples qui vont suivres pour mieux comprendre mes propos :
                 <ul>
-                    <li>Le cadre gris foncé représentera les limites du svg, donc le viexport et est fixé en css</li>
-                    <li>Le cadre jaune représente lui le viewbox, c'est un le contour d'un rectangle qui fait toujours les dimensions du viewbox.
+                    <li>Le cadre gris foncé représentera les limites du svg</li>
+                    <li>Le cadre jaune représente lui le viewbox, c'est le contour d'un rectangle qui fait toujours les dimensions du viewbox.
                     Son contour est de 6px, 3 à l'extérieur, et 3 à l'intérieur de l'élément rect.</li>
                 </ul>
             </p>
@@ -101,7 +100,7 @@
                             &lt;svg width="150" height="150" viewbox="0 0 150 150" /&gt;
                         </code>
                         <p>Pas de surprise, c'est l'exemple de base, le viewbox est précisé et fait les mêmes dimensions que le viewport.
-                            Le rond bleu à bien un diamètre de 100, et le rond rose n'est pas visible.</p>
+                            Le rond bleu a bien un diamètre de 100, et le rond rose n'est pas visible.</p>
                     </td>
                 </tr>
                 <tr class="svgExemple_line">
@@ -186,7 +185,7 @@
 
             <h3>La translation</h3>
 
-            <p>Jusqu'à maintenant, on avait pas modifié min-x, et min-y. Et bien c'est parti.</p>
+            <p>Jusqu'à maintenant, on n'avait pas modifié min-x, et min-y. Et bien c'est parti.</p>
 
             <table class="svgExemple_table">
                 <tr class="svgExemple_line">
@@ -201,10 +200,10 @@
                         <code class="svgExemple_code">
                             &lt;svg width="150" height="150" viewbox="50 -50 150 150" /&gt;
                         </code>
-                        <p>Préciser une valeur autre que 0 a min-x et min-y entraine un décalage du viewbox. Plus précisément, une <b>translation</b> ( <b>translate</b> ) va faire
-                            concordé les coordonnées x = 50 et le y = -50 du viewport avec le point d'origine du viewport. Dans notre exemple, il en résulte donc
+                        <p>Préciser une valeur autre que 0 à min-x et min-y entraine un décalage du viewbox. Plus précisément, une <b>translation</b> ( <b>translate</b> ) va faire
+                            concorder les coordonnées x = 50 et y = -50 du viewport avec le point d'origine du viewbox. Dans notre exemple, il en résulte donc
                             un translate(-50, 50).<br>
-                        A noter que sur cette exemple, le viewbox est identique au viewport, et seul une translation est effectuée.</p>
+                        À noter que sur cet exemple, le viewbox est identique au viewport, et seul une translation est effectuée.</p>
                     </td>
                 </tr>
                 <tr class="svgExemple_line">
@@ -219,9 +218,9 @@
                         <code class="svgExemple_code">
                             &lt;svg width="150" height="150" viewbox="50 50 300 300" /&gt;
                         </code>
-                        <p>Dans ce cas, et comme déjà vu un peu plus haut, la zone d'affichage est 2 fois plus grande vu que l'échelle est devenu plus petite.
+                        <p>Dans ce cas, et comme déjà vu un peu plus haut, la zone d'affichage est 2 fois plus grande vu que l'échelle est devenue plus petite.
                         La translation est également là, mais parait 2 fois moins importante. Visuellement, c'est le cas.<br>
-                        Ce qui ce passe, c'est que l'échelle est modifié en premier, et la translation s'effectue sur cette nouvelle échelle. Visuellement,
+                        Ce qui ce passe, c'est que l'échelle est modifiée en premier, et la translation s'effectue sur cette nouvelle échelle. Visuellement,
                         on voit bien un décalage de 25 pixels correspondant aux informations renseignées dans l'attribut viewbox.</p>
                     </td>
                 </tr>
@@ -238,7 +237,7 @@
                             &lt;svg width="150" height="150" viewbox="75 0 150 300" /&gt;
                         </code>
                         <p>Pour ce dernier exemple, je vais cumuler ce que l'on a vu jusqu'à maintenant. La hauteur du viewbox est deux fois celle du viewport,
-                        donc l'échelle est inférieur. En revanche, la largeur du viewbox est la meme que celle du viewport, et comme l'attribut preserveAspectRatio
+                        donc l'échelle est inférieur. En revanche, la largeur du viewbox est la même que celle du viewport, et comme l'attribut preserveAspectRatio
                         n'est pas précisé, le ratio entre l'axe x et l'axe y est préservé. Le viewbox fait donc visuellement 75 pixels de large et est centré dans
                         le viewport. Ensuite, il y a une translation de 75 sur l'échelle du viewbox, soit visuellement de 37,5. Le point d'origine de la viewbox
                         se retrouve donc maintenant confondu avec celui du viewport</p>
@@ -246,7 +245,7 @@
                 </tr>
             </table>
 
-            <p>Ce dernier exemple utilise une translation pour empecher de centre le viewbox dans le viewport. On va voir qu'il y a plus simple pour arriver au même résultat.</p>
+            <p>Ce dernier exemple utilise une translation pour empecher de centrer le viewbox dans le viewport. On va voir qu'il y a plus simple pour arriver au même résultat.</p>
 
             <h2>preserveAspectRatio</h2>
 
