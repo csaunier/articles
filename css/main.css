@@ -132,11 +132,17 @@ svg {
 }
 
 .svgExemple_svg,
-.svgExemple_explanation {
+.svgExemple_explanation,
+.svgExemple_aspect {
     border-right: 1px solid #eee;
     border-bottom: 1px solid #eee;
     padding: 10px;
     vertical-align: top;
+}
+
+.svgExemple_aspect {
+    padding: 20px;
+    font-weight: bold
 }
 
 .svgExemple_explanation {
