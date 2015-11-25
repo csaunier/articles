@@ -257,15 +257,16 @@
 
             <h2>PreserveAspectRatio</h2>
 
-            <p>Cet attribut prends deux valeurs en paramètres (le deuxième est facultatif) et n'est pas interpreté si l'attribut viewbox est  :
+            <p>Cet attribut prends deux valeurs en paramètres (le deuxième est facultatif) et n'est pas interpreté si l'attribut viewbox est absent :
                 <code class="svgExemple_code">
                     preserveAspectRatio = "  &lt;align&gt; [&lt;meetOrSlice&gt;] "
                 </code>
             </p>
 
+            <h3>Le paramètre align</h3>
+
             <p>&lt;align&gt; peut prendre come valeur l'une des dix suivantes : "none", "xMinYMin", "xMinYMid", "xMinYMax", "xMidYMin", "xMidYMid", "xMidYMax"
                 , "xMaxYMin", "xMaxYMid", "xMaxYMax". A part none, ces valeurs vont permettre d'aligner le viewbox dans le viewport.</p>
-
 
             <table class="svgExemple_table">
                 <tr class="svgExemple_line">
@@ -281,7 +282,7 @@
                         <code class="svgExemple_code">
                             &lt;svg width="150" height="150" viewbox="0 0 300 150" preserveAspectRatio="none" /&gt;
                         </code>
-                        <p>"None" est la seule valeure un peu spéciale. Dans cet unique cas, le ratio n'est pas préservé et le viewbox vient s'inscrire
+                        <p>"None" est la seule valeur un peu spéciale. Dans cet unique cas, le ratio n'est pas préservé et le viewbox vient s'inscrire
                         parfaitement dans le viewport, au risque de déformer le dessins.
                         <br>A noter que dans ce cas, la valeur de &lt;meetOrSlice&gt; n'est pas prise en compte.</p>
                     </td>
@@ -322,6 +323,108 @@
                             mais la valeur xMaxYMin va l'aligner à droite.
                             <br>
                             De la même façon, xMaxYMid et xMaxYMax ont le même résultat visuel.</p>
+                    </td>
+                </tr>
+                <tr class="svgExemple_line">
+                    <td class="svgExemple_aspect">xMidYMax</td>
+                    <td class="svgExemple_svg">
+                        <svg width="150" height="150" viewbox="0 0 150 300" preserveAspectRatio="xMidYMax">
+                            <rect x="0" y="0" width="100%" height="100%" stroke="#ffb718" stroke-width="6" fill-opacity="0"/>
+                            <circle cx="50" cy="50" r="50" fill="#00a5ba"/>
+                            <circle cx="300" cy="50" r="50" fill="#ea2b51"/>
+                        </svg>
+                    </td>
+                    <td class="svgExemple_explanation">
+                        <code class="svgExemple_code">
+                            &lt;svg width="150" height="150" viewbox="0 0 150 300" preserveAspectRatio="xMidYMax" /&gt;
+                        </code>
+                        <p>En reprenant l'example précédent, mais en précisant un preserveAspectRatio à xMidYMax, le viewbox est centré horizontalement.
+                            xMidYMin et xMidYMid produiront le même effet.
+                            <br>Sur ce cas, on pourrait bien sur carrément enlever l'attribut, car comme vu sur les exemples de la partie viewbox,
+                            avoir ce dernier centré est le comportement par défaut.
+                        </p>
+                    </td>
+                </tr>
+            </table>
+
+            <p>Pas la peine d'illustrer tous less cas de figures, les exemples sont suffisament parlant concernant l'alignement en "Min" ou en "Max".
+            Par contre l'interet de "Mid" est plutôt limité pour le moment.</p>
+
+            <p>Mais c'est là que &lt;meetOrSlice&gt; va rentrer en jeux.</p>
+
+            <h3>Le paramètre meetOrSlice</h3>
+
+            <p>&lt;meetOrSlice&gt;, comme son nom l'indique peut avoir deux valeurs différentes : "meet", qui est la valeur par défaut, ou "slice",
+                la valeur à laquelle nous allons nous interesser.</p>
+
+            <p>Jusqu'à maintenant, on a vu que le viewbox était contraint dans le viewport par la plus grande valeur entre le
+                &lt;width&gt; et le &lt;height&gt; de l'attribut viewbox. "Slice" permet de changer cela et d'utiliser la plus petite valeur.
+            <br>Si le viewbox n'est pas homothétique au viewport, une partie du viewbox ne sera donc pas visible.</p>
+
+            <table class="svgExemple_table">
+                <tr class="svgExemple_line">
+                    <td class="svgExemple_aspect">xMinYMin slice</td>
+                    <td class="svgExemple_svg">
+                        <svg width="150" height="150" viewbox="0 0 300 150" preserveAspectRatio="xMinYMin slice">
+                            <rect x="0" y="0" width="100%" height="100%" stroke="#ffb718" stroke-width="6" fill-opacity="0"/>
+                            <circle cx="50" cy="50" r="50" fill="#00a5ba"/>
+                            <circle cx="300" cy="50" r="50" fill="#ea2b51"/>
+                        </svg>
+                    </td>
+                    <td class="svgExemple_explanation">
+                        <code class="svgExemple_code">
+                            &lt;svg width="150" height="150" viewbox="0 0 300 150" preserveAspectRatio="xMinYMin slice" /&gt;
+                        </code>
+                        <p>Dans ce cas, le viewbox est plus long que le viewport, et le paramètre xMinYin permet d'aligner à gauche le viewbox.
+                        <br>Cette fois, c'est xMinYMid et xMinYMax qui ont le même comportement.</p>
+                    </td>
+                </tr>
+                <tr class="svgExemple_line">
+                    <td class="svgExemple_aspect">xMaxYMin slice</td>
+                    <td class="svgExemple_svg">
+                        <svg width="150" height="150" viewbox="0 0 300 150" preserveAspectRatio="xMaxYMin slice">
+                            <rect x="0" y="0" width="100%" height="100%" stroke="#ffb718" stroke-width="6" fill-opacity="0"/>
+                            <circle cx="50" cy="50" r="50" fill="#00a5ba"/>
+                            <circle cx="300" cy="50" r="50" fill="#ea2b51"/>
+                        </svg>
+                    </td>
+                    <td class="svgExemple_explanation">
+                        <code class="svgExemple_code">
+                            &lt;svg width="150" height="150" viewbox="0 0 300 150" preserveAspectRatio="xMaxYMin slice" /&gt;
+                        </code>
+                        <p>XXXXX</p>
+                    </td>
+                </tr>
+                <tr class="svgExemple_line">
+                    <td class="svgExemple_aspect">xMidYMin slice</td>
+                    <td class="svgExemple_svg">
+                        <svg width="150" height="150" viewbox="0 0 300 150" preserveAspectRatio="xMidYMin slice">
+                            <rect x="0" y="0" width="100%" height="100%" stroke="#ffb718" stroke-width="6" fill-opacity="0"/>
+                            <circle cx="50" cy="50" r="50" fill="#00a5ba"/>
+                            <circle cx="300" cy="50" r="50" fill="#ea2b51"/>
+                        </svg>
+                    </td>
+                    <td class="svgExemple_explanation">
+                        <code class="svgExemple_code">
+                            &lt;svg width="150" height="150" viewbox="0 0 300 150" preserveAspectRatio="xMidYMin slice" /&gt;
+                        </code>
+                        <p>XXXXX</p>
+                    </td>
+                </tr>
+                <tr class="svgExemple_line">
+                    <td class="svgExemple_aspect">xMidYMid slice</td>
+                    <td class="svgExemple_svg">
+                        <svg width="150" height="150" viewbox="0 0 150 300" preserveAspectRatio="xMidYMid slice">
+                            <rect x="0" y="0" width="100%" height="100%" stroke="#ffb718" stroke-width="6" fill-opacity="0"/>
+                            <circle cx="50" cy="50" r="50" fill="#00a5ba"/>
+                            <circle cx="300" cy="50" r="50" fill="#ea2b51"/>
+                        </svg>
+                    </td>
+                    <td class="svgExemple_explanation">
+                        <code class="svgExemple_code">
+                            &lt;svg width="150" height="150" viewbox="0 0 150 300" preserveAspectRatio="xMidYMid slice" /&gt;
+                        </code>
+                        <p>XXXXX</p>
                     </td>
                 </tr>
             </table>
