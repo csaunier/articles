@@ -11,40 +11,42 @@
         <link rel="stylesheet" href="css/main.css">
     </head>
     <body>
-	
+
 		<div class="mainContent">
-		
+
 			<h1>Les coordonnées en SVG</h1>
 
-            <p>Selon le site <a href="http://caniuse.com/#search=svg" target="_blank">can i use</a>, SVG est maintenant reconnu par plus de 95.92% des navigateurs présent sur le marché. Il
+            <img src="img/coordonnees_svg.svg" width="100%" alt="">
+
+            <p>Selon le site <a href="http://caniuse.com/#search=svg" target="_blank">can i use</a>, SVG est maintenant reconnu par plus de 95.92% des navigateurs présents sur le marché. Il
             n'y a donc plus de raisons de ne pas adopter ce format. Si par malheur vous travaillez sur un projet
-            qui ne prendrais pas en compte cette statistique, et vous forcerez à supporter IE8 pour ne pas le siter, un fallback en png
+            qui ne prendrait pas en compte cette statistique, et vous forcerez à supporter IE8 pour ne pas le citer, un fallback en png
             peut facilement être mis en place.</p>
 
-            <p>Ceci étant dit, cet article va se concentrer sur le système de coordonnées et les paramêtres permettant de le modifier.
-            <br>Plus précisément, on va s'intéresser au "S" de svg, pour scalable, soit adaptable en français.</p>
+            <p>Cela étant dit, cet article va se concentrer sur le système de coordonnées et les paramètres permettant de le modifier.
+            <br>Plus précisément, on va s'intéresser au "S" de svg, pour <b>scalable</b>, soit <b>adaptable</b> en français.</p>
 
             <h2>Introduction</h2>
 
             <p>
-                La balises svg créait une zone de dessins aux dimensions illimitées, c'est ce que l'on appel le <b>canvas</b>,
+                La balise svg créait une zone de dessins aux dimensions illimitées, c'est ce que l'on appelle le <b>canvas</b>,
                 dont l'utilisateur ne verra qu'une partie,
-                un rectangle délimité par les attributs width et height de la balise. C'est ce rectangle que l'on appel le <b>viewport</b>.
+                un rectangle délimité par les attributs width et height de la balise. C'est ce rectangle que l'on appelle le <b>viewport</b>.
                 <br>Il faut voir ça comme un écran de télévision, celui-ci
                 délimitant une zone d'affichage convenue, alors qu'un plateau de télévision est bien sur plus vaste.<br>
-                Sans plus d'informations fournies par diverses attribus, un système de coordonnées est mis en place, avec pour origine le coint supérieur
+                Sans plus d'informations fournies par diverses attributs, un système de coordonnées est mis en place, avec pour origine le coin supérieur
                 gauche du viewport.
             </p>
-			
-			<p>Pour commencer, les attributs width et height n'ont pas forcément besoin d'unités. Dans ce 
-			cas de figure, c'est le système d'<b>unité de l'utilisateur</b> qui sera utilisé soit le pixel.
-			<br>Vous pourrez aussi déterminer cette unitée parmis les suivantes :</p>
-			
+
+			<p>Pour commencer, les attributs width et height n'ont pas forcément besoin d'unités. Dans ce
+			cas de figure, c'est le système d'<b>unités de l'utilisateur</b> qui sera utilisé soit le pixel.
+			<br>Vous pourrez aussi déterminer cette unitée parmi les suivantes :</p>
+
 			<code class="svgExemple_code">
 				em, ex, px, pt, pc, cm, mm, in, et %
 			</code>
 
-            <p>Je fais une petite pause pour évoquer un cas particulier : que ce passe t'il si l'on ommet ces attributs width et height ?</p>
+            <p>Je fais une petite pause pour évoquer un cas particulier : que ce passe t'il si l'on omet ces attributs width et height ?</p>
 
             <code class="svgExemple_code">
                 &lt;svg&gt;<br>
@@ -61,32 +63,32 @@
                 <circle cx="50%" cy="150" r="25" fill="#6b84c1"/>
             </svg>
 
-            <p>Sans préciser de width et de height, on se retrouve vite face à une première difficulté : Firefox et Chrome créaient un élement
+            <p>Sans préciser de width et de height, on se retrouve vite face à une première difficulté : Firefox et Chrome créaient un élément
             de 300*150 pixels, tandis que Internet Explorer, Edge inclus, créait lui un élément de 100% de largeur, pour 150px de hauteur.</p>
 
             <p>Pas la peine de prendre de risques, une bonne pratique sera de spécifier une largeur et une hauteur, que ce soit en css
             ou directement sur la balise svg. C'est ce que je ferais pour les exemples qui vont suivre.</p>
 
-            <p>Néammmoins, pas de surprises concernant le système de coordonnées, on a bien précisé que le centre du cercle bleu était à x=50 et y=50,
+            <p>Néanmmoins, pas de surprises concernant le système de coordonnées, on a bien précisé que le centre du cercle bleu était à x=50 et y=50,
                 et visuellement on retrouve bien exactement ce résultat.</p>
 
             <p>Maintenant, on va voir comment jouer avec ces coordonnées.</p>
 
             <h2>L'attribut viewbox</h2>
 
-            <p>Pas de teasing, tout vas ce faire grâce à l'attribut viewbox. Si aucune valeur n'est précisé le viewport ne sera pas modifié,
-                et donc le système de coordonnées ne changera pas. Viewbox prends en valeur 4 paramètres :
+            <p>Pas de teasing, tout vas se faire grâce à l'attribut viewbox. Si aucune valeur n'est précisée, le viewport ne sera pas modifié,
+                et donc le système de coordonnées ne changera pas. Viewbox prend en valeur 4 paramètres :
                 <code class="svgExemple_code">
                     viewBox = " &lt;min-x&gt; &lt;min-y&gt; &lt;width&gt; &lt;height&gt; "
                 </code>
             </p>
 
-            <p>Ces 4 paramètres vont permettre de définir un rectangle qui va redéfinir le systéme de coordonnées du viewport.
-                Et c'est là que les choses deviennent interessantes.
-                L'<b>échelle</b> ( <b>scale</b> ) pourra être modifié et être supérieur ou inférieur à la valeur de base 1:1, mais toujours de façon à faire rentrer,
+            <p>Ces 4 paramètres n'ont pas d'unités et vont permettre de définir un rectangle qui va redéfinir le système de coordonnées du viewport.
+                Et c'est là que les choses deviennent intéressantes.
+                L'<b>échelle</b> ( <b>scale</b> ) pourra être modifiée et être supérieure ou inférieure à la valeur de base 1:1, mais toujours de façon à faire rentrer,
                 ou plutôt à contraindre le viewbox dans le viewport.</p>
 
-            <p>Petit apparté visuel sur les bordures des exemples qui vont suivres pour mieux comprendre mes propos :
+            <p>Petit aparté visuel sur les bordures des exemples qui vont suivre pour mieux comprendre mes propos :
                 <ul>
                     <li>Le cadre gris foncé représentera les limites du svg</li>
                     <li>Le cadre jaune représente lui le viewbox, c'est le contour d'un rectangle qui fait toujours les dimensions du viewbox.
@@ -145,8 +147,8 @@
                         <code class="svgExemple_code">
                             &lt;svg width="150" height="150" viewbox="0 0 100 100" /&gt;
                         </code>
-                        Cette fois-ci, le viewbox est inférieur au viewport. L'échelle est aussi modifié à 3:2, le rond bleu prends cette fois
-                        toute la place disponible, soit un diamètre de 100 * 3 / 2 = 150, ce qui corresponds bien aux largeurs et hauteurs du viewport.
+                        Cette fois-ci, le viewbox est inférieur au viewport. L'échelle est aussi modifiée à 3:2, le rond bleu prend cette fois
+                        toute la place disponible, soit un diamètre de 100 * 3 / 2 = 150, ce qui correspond bien aux largeurs et hauteurs du viewport.
                     </td>
                 </tr>
 
@@ -170,10 +172,10 @@
                         <code class="svgExemple_code">
                             &lt;svg width="150" height="150" viewbox="0 0 150 100" /&gt;
                         </code>
-                        <p>L'échelle sur l'axe x n'est pas modifié, puisque la largeur du viewbox est la même que celle du viewport.<br>Ce qui
-                        est intéressant ici, c'est que l'échelle sur l'axe y n'est pas modifié non plus, puisque le rond n'est pas écrasé. Le
+                        <p>L'échelle sur l'axe x n'est pas modifiée, puisque la largeur du viewbox est la même que celle du viewport.<br>Ce qui
+                        est intéressant ici, c'est que l'échelle sur l'axe y n'est pas modifiée non plus, puisque le rond n'est pas écrasé. Le
                         ratio est préservé. Nous verrons plus tard que l'attribut <b>preserveAspectRatio</b> permet de jouer avec cela.<br>
-                        Une dernière chose bien visible est que le viewport ce retrouve centrer verticalement dans le viewport. PreserveAspectRatio aura
+                        Une dernière chose bien visible est que le viewport se retrouve centrer verticalement dans le viewport. PreserveAspectRatio aura
                         à nouveau son mot à dire sur cette caractéristique.</p>
                     </td>
                 </tr>
@@ -190,7 +192,7 @@
                         <code class="svgExemple_code">
                             &lt;svg width="150" height="150" viewbox="0 0 200 300" /&gt;
                         </code>
-                        <p>Sur cette exemple, l'échelle a été modifié, puisque n'y la largeur, n'y la hauteur du viewbox ne correspondaient au viewport.
+                        <p>Sur cet exemple, l'échelle a été modifié, puisque ni la largeur, ni la hauteur du viewbox ne correspondaient au viewport.
                         Par contre le ratio entre l'axe x et y reste le même, le rond n'est toujours pas déformé, et on peut se rendre compte que
                             cette fois, le viewbox est centré horizontalement dans le viewport.</p>
                     </td>
@@ -219,7 +221,7 @@
                         <p>Préciser une valeur autre que 0 à min-x et min-y entraine un décalage du viewbox. Plus précisément, une <b>translation</b> ( <b>translate</b> ) va faire
                             concorder les coordonnées x = 50 et y = -50 du viewport avec le point d'origine du viewbox. Dans notre exemple, il en résulte donc
                             un translate(-50, 50).<br>
-                        À noter que sur cet exemple, le viewbox est identique au viewport, et seul une translation est effectuée.</p>
+                        À noter que sur cet exemple, le viewbox est identique au viewport, et seule une translation est effectuée.</p>
                     </td>
                 </tr>
                 <tr class="svgExemple_line">
@@ -236,8 +238,8 @@
                             &lt;svg width="150" height="150" viewbox="50 50 300 300" /&gt;
                         </code>
                         <p>Dans ce cas, et comme déjà vu un peu plus haut, la zone d'affichage est 2 fois plus grande vu que l'échelle est devenue plus petite.
-                        La translation est également là, mais parait 2 fois moins importante. Visuellement, c'est le cas.<br>
-                        Ce qui ce passe, c'est que l'échelle est modifiée en premier, et la translation s'effectue sur cette nouvelle échelle. Visuellement,
+                        La translation est également là, mais paraît 2 fois moins importante. Visuellement, c'est le cas.<br>
+                        Ce qui se passe, c'est que l'échelle est modifiée en premier, et la translation s'effectue sur cette nouvelle échelle. Visuellement,
                         on voit bien un décalage de 25 pixels correspondant aux informations renseignées dans l'attribut viewbox.</p>
                     </td>
                 </tr>
@@ -263,11 +265,11 @@
                 </tr>
             </table>
 
-            <p>Ce dernier exemple utilise une translation pour empecher de centrer le viewbox dans le viewport. On va voir qu'il y a plus simple pour arriver au même résultat.</p>
+            <p>Ce dernier exemple utilise une translation pour empêcher de centrer le viewbox dans le viewport. On va voir qu'il y a plus simple pour arriver au même résultat.</p>
 
             <h2>PreserveAspectRatio</h2>
 
-            <p>Cet attribut prends deux valeurs en paramètres (le deuxième est facultatif) et n'est pas interpreté si l'attribut viewbox est absent :
+            <p>Cet attribut prend deux valeurs en paramètres (le deuxième est facultatif) et n'est pas interprété si l'attribut viewbox est absent :
                 <code class="svgExemple_code">
                     preserveAspectRatio = "  &lt;align&gt; [&lt;meetOrSlice&gt;] "
                 </code>
@@ -276,7 +278,7 @@
             <h3>Le paramètre align</h3>
 
             <p>&lt;align&gt; peut prendre come valeur l'une des dix suivantes : "none", "xMinYMin", "xMinYMid", "xMinYMax", "xMidYMin", "xMidYMid", "xMidYMax"
-                , "xMaxYMin", "xMaxYMid", "xMaxYMax". A part none, ces valeurs vont permettre d'aligner le viewbox dans le viewport.</p>
+                , "xMaxYMin", "xMaxYMid", "xMaxYMax". À part none, ces valeurs vont permettre d'aligner le viewbox dans le viewport.</p>
 
             <table class="svgExemple_table">
                 <tr class="svgExemple_line">
@@ -294,8 +296,8 @@
                             &lt;svg width="150" height="150" viewbox="0 0 300 150" preserveAspectRatio="none" /&gt;
                         </code>
                         <p>"None" est la seule valeur un peu spéciale. Dans cet unique cas, le ratio n'est pas préservé et le viewbox vient s'inscrire
-                        parfaitement dans le viewport, au risque de déformer le dessins.
-                        <br>A noter que dans ce cas, la valeur de &lt;meetOrSlice&gt; n'est pas prise en compte.</p>
+                        parfaitement dans le viewport, au risque de déformer les dessins.
+                        <br>À noter que dans ce cas, la valeur de &lt;meetOrSlice&gt; n'est pas prise en compte.</p>
                     </td>
                 </tr>
                 <tr class="svgExemple_line">
@@ -312,10 +314,10 @@
                         <code class="svgExemple_code">
                             &lt;svg width="150" height="150" viewbox="0 0 300 150" preserveAspectRatio="xMinYMin" /&gt;
                         </code>
-                        <p>Dans cet exemple, nous avons définis un viewbox deux fois plus large que haut. Sans preserveAspectRatio, le viewbox serai centré
-                            verticalement dans le viewport, comme on l'a vu précédement. Mais ici, en précisant comme valeur d'alignement xMinYMin, on force l'alignement du viewbox en haut à gauche.
+                        <p>Dans cet exemple, nous avons défini un viewbox deux fois plus large que haut. Sans preserveAspectRatio, le viewbox serait centré
+                            verticalement dans le viewport, comme on l'a vu précédemment. Mais ici, en précisant comme valeur d'alignement xMinYMin, on force l'alignement du viewbox en haut à gauche.
                             <br>
-                            A noter que les valeurs xMidYMin et xMaxYMin auraient le même résultat visuellement, puisque le viewbox prend toute la valeur du viewport.</p>
+                            À noter que les valeurs xMidYMin et xMaxYMin auraient le même résultat visuellement, puisque le viewbox prend toute la valeur du viewport.</p>
                     </td>
                 </tr>
                 <tr class="svgExemple_line">
@@ -332,7 +334,7 @@
                         <code class="svgExemple_code">
                             &lt;svg width="150" height="150" viewbox="0 0 150 300" preserveAspectRatio="xMaxYMin" /&gt;
                         </code>
-                        <p>Cette fois, c'est la hauteur qui est supérieure à la largeur. On pourrai s'attendre à ce que le viewbox soit centré horizontalement,
+                        <p>Cette fois, c'est la hauteur qui est supérieure à la largeur. On pourrait s'attendre à ce que le viewbox soit centré horizontalement,
                             mais la valeur xMaxYMin va l'aligner à droite.
                             <br>
                             De la même façon, xMaxYMid et xMaxYMax ont le même résultat visuel.</p>
@@ -352,7 +354,7 @@
                         <code class="svgExemple_code">
                             &lt;svg width="150" height="150" viewbox="0 0 150 300" preserveAspectRatio="xMidYMax" /&gt;
                         </code>
-                        <p>En reprenant l'example précédent, mais en précisant un preserveAspectRatio à xMidYMax, le viewbox est centré horizontalement.
+                        <p>En reprenant l'exemple précédent, mais en précisant un preserveAspectRatio à xMidYMax, le viewbox est centré horizontalement.
                             xMidYMin et xMidYMid produiront le même effet.
                             <br>Sur ce cas, on pourrait bien sur carrément enlever l'attribut, car comme vu sur les exemples de la partie viewbox,
                             avoir ce dernier centré est le comportement par défaut.
@@ -361,15 +363,15 @@
                 </tr>
             </table>
 
-            <p>Pas la peine d'illustrer tous less cas de figures, les exemples sont suffisament parlant concernant l'alignement en "Min" ou en "Max".
+            <p>Pas la peine d'illustrer tous les cas de figure, les exemples sont suffisamment parlant concernant l'alignement en "Min" ou en "Max".
             Par contre l'interet de "Mid" est plutôt limité pour le moment.</p>
 
-            <p>Mais c'est là que &lt;meetOrSlice&gt; va rentrer en jeux.</p>
+            <p>Mais c'est là que &lt;meetOrSlice&gt; va rentrer en jeu.</p>
 
             <h3>Le paramètre meetOrSlice</h3>
 
             <p>&lt;meetOrSlice&gt;, comme son nom l'indique peut avoir deux valeurs différentes : "meet", qui est la valeur par défaut, ou "slice",
-                la valeur à laquelle nous allons nous interesser.</p>
+                la valeur à laquelle nous allons nous intéresser.</p>
 
             <p>Jusqu'à maintenant, on a vu que le viewbox était contraint dans le viewport par la plus grande valeur entre le
                 &lt;width&gt; et le &lt;height&gt; de l'attribut viewbox. "Slice" permet de changer cela et d'utiliser la plus petite valeur.
@@ -408,7 +410,8 @@
                         <code class="svgExemple_code">
                             &lt;svg width="150" height="150" viewbox="0 0 300 150" preserveAspectRatio="xMaxYMin slice" /&gt;
                         </code>
-                        <p>XXXXX</p>
+                        <p>xMaxYMin permet à l'inverse de l'exemple précédent d'aligner à droite le viewbox dans le viewport.
+                        <br>xMaxYMid xMaxYMax auront le même comportement.</p>
                     </td>
                 </tr>
                 <tr class="svgExemple_line">
@@ -425,7 +428,9 @@
                         <code class="svgExemple_code">
                             &lt;svg width="150" height="150" viewbox="0 0 300 150" preserveAspectRatio="xMidYMin slice" /&gt;
                         </code>
-                        <p>XXXXX</p>
+                        <p>3ème cas de figure, xMidYMin va permettre de centrer le viewbox horizontalement, toujours car le
+                            viwbox est plus long que le viewport.
+                        <br>De la même façon, xMidYMid et xMidYMax auront visuellement le même résultat.</p>
                     </td>
                 </tr>
                 <tr class="svgExemple_line">
@@ -442,10 +447,35 @@
                         <code class="svgExemple_code">
                             &lt;svg width="150" height="150" viewbox="0 0 150 300" preserveAspectRatio="xMidYMid slice" /&gt;
                         </code>
-                        <p>XXXXX</p>
+                        <p>Dernier exemple : cette fois, le viewbox à une hauteur supérieure au viewport.
+                        <br>Pas besoin de reprendre tous les cas de figure possibles, c'est la deuxième partie du paramètre
+                            &lt; align &gt; qui sera pris en compte.
+                            <br>
+                            xMidYMid va donc permettre de centrer verticalement le viewbox dans le viewport.
+                        </p>
                     </td>
                 </tr>
             </table>
+
+            <h2>Conclusion</h2>
+
+            <p>
+                Ça y est nous voila à la fin de cet article.<br>
+                Bien comprendre les coordonnées est important et permet de plus facilement travailler avec les svgs exportés
+                par différents logiciels.
+                Cela permet aussi de résoudre des problématiques simples comme :
+            </p>
+            <ul>
+                <li>Mon svg est bien présent dans la page, mais rien ne s'affiche.</li>
+                <li>Je n'ai qu'une partie du svg d'affichée, et en plus celle-ci à l'air d'être zoomée.</li>
+            </ul>
+            <p>Un peu de lecture complémentaire pour finir:</p>
+            <ul>
+                <li><a href="https://www.w3.org/TR/SVG/coords.html">La spec officielle</a> du W3C (en)</li>
+                <li><a href="http://tutorials.jenkov.com/svg/svg-viewport-view-box.html">SVG Viewport and View Box</a> de Jakob Jenkov (en)</li>
+                <li><a href="https://css-tricks.com/scale-svg/">How to Scale SVG</a> de Amelia Bellamy-Royds (en)</li>
+                <li><a href="https://sarasoueidan.com/blog/svg-coordinate-systems/">Understanding SVG Coordinate Systems & Transformations (Part 1) – The viewport, viewBox, & preserveAspectRatio</a> de Sara Soueidan (en)</li>
+            </ul>
 
 		</div>
 
