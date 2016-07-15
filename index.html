@@ -38,40 +38,6 @@
                 gauche du <i lang="en">viewport</i>.
             </p>
 
-			<p>Pour commencer, les attributs <i lang="en">width</i> et <i lang="en">height</i> n'ont pas forcément besoin d'unités. Dans ce
-			cas de figure, c'est le système d'<b>unités de l'utilisateur</b> qui sera utilisé, soit le pixel.
-			<br>Vous pourrez aussi déterminer cette unité parmi les suivantes :</p>
-
-			<code class="svgExemple_code">
-				em, ex, px, pt, pc, cm, mm, in, et %
-			</code>
-
-            <p>Je fais une petite pause pour évoquer un cas particulier : que ce passe-t-il si l'on omet ces attributs <i lang="en">width</i> et <i lang="en">height</i> ?</p>
-
-            <code class="svgExemple_code">
-                &lt;svg&gt;<br>
-                &lt;circle cx="50" cy="50" r="50" fill="#00a5ba"/&gt;<br>
-                &lt;circle cx="300" cy="50" r="50" fill="#ea2b51"/&gt;<br>
-                &lt;circle cx="50%" cy="150" r="25" fill="#6b84c1"/&gt;<br>
-                &lt;/svg&gt;
-            </code>
-
-            <svg>
-                <rect x="0" y="0" width="100%" height="100%" stroke="#ffb718" stroke-width="6" fill-opacity="0"/>
-                <circle cx="50" cy="50" r="50" fill="#00a5ba"/>
-                <circle cx="300" cy="50" r="50" fill="#ea2b51"/>
-                <circle cx="50%" cy="150" r="25" fill="#6b84c1"/>
-            </svg>
-
-            <p>Sans préciser de <i lang="en">width</i> et de height, on se retrouve vite face à une première difficulté : Firefox et Chrome créent un élément
-            de 300*150 pixels, tandis que Internet Explorer – Edge inclus – crée, lui, un élément de 100% de largeur, pour 150px de hauteur.</p>
-
-            <p>Pas la peine de prendre de risques : une bonne pratique sera de spécifier une largeur et une hauteur, que ce soit en css
-            ou directement sur la balise svg. C'est ce que je ferai pour les exemples qui vont suivre.</p>
-
-            <p>Néanmoins, pas de surprise concernant le système de coordonnées : on a bien précisé que le centre du cercle bleu était à x=50 et y=50,
-                et visuellement on retrouve bien exactement ce résultat.</p>
-
             <p>Maintenant, on va voir comment jouer avec ces coordonnées.</p>
 
             <h2>L'attribut viewbox</h2>
