@@ -105,6 +105,7 @@ body {
     padding: 20px;
     margin: 20px auto;
     background: #fff;
+    line-height: 1.5rem;
 }
 
 svg {
@@ -113,12 +114,23 @@ svg {
 }
 
 .svgExemple_code {
-    border: 1px solid #ccc;
+    box-shadow: 0 0 0 1px #ccc;
     background: #fefefe;
     padding: 10px;
     border-radius: 5px;
     display: block;
+    line-height: 1.3rem;
     margin: 1em 0;
+}
+
+.svgExemple_code--inline {
+    box-shadow: 0 0 0 1px #ccc;
+    background: #fefefe;
+    padding: 0 5px;
+    border-radius: 3px;
+    display: inline-block;
+    line-height: 1.2rem;
+    margin: 0 1px;
 }
 
 .svgExemple_table .svgExemple_code {
