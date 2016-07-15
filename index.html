@@ -18,27 +18,27 @@
 
             <img src="img/coordonnees_svg.svg" width="100%" alt="">
 
-            <p>Selon le site <a href="http://caniuse.com/#search=svg" target="_blank">can I use</a>, SVG est maintenant reconnu par plus de 95.92% des navigateurs présents sur le marché. Il
+            <p>Selon le site <a href="http://caniuse.com/#search=svg" target="_blank">can I use</a>, SVG est maintenant reconnu par plus de 95,92% des navigateurs présents sur le marché. Il
             n'y a donc plus de raison de ne pas adopter ce format. Si par malheur vous travaillez sur un projet
-            qui ne prendrait pas en compte cette statistique, et êtes forcé de supporter IE8 pour ne pas le citer, un fallback en png
+            qui ne prendrait pas en compte cette statistique, et êtes forcé de supporter IE8 pour ne pas le citer, un <i lang="en">fallback</i> en png
             peut facilement être mis en place.</p>
 
             <p>Cela étant dit, cet article va se concentrer sur le système de coordonnées et les paramètres permettant de le modifier.
-            <br>Plus précisément, on va s'intéresser au "S" de svg, pour <b>scalable</b>, soit <b>adaptable</b> en français.</p>
+            <br>Plus précisément, on va s'intéresser au "S" de SVG, pour <b><i lang="en">scalable</i></b>, soit <b>adaptable</b> en français.</p>
 
             <h2>Introduction</h2>
 
             <p>
-                La balise svg crée une zone de dessin aux dimensions illimitées, c'est ce que l'on appelle le <b>canvas</b>,
+                La balise svg crée une zone de dessin aux dimensions illimitées, c'est ce que l'on appelle le <b><i lang="en">canvas</i></b>,
                 dont l'utilisateur ne verra qu'une partie,
-                un rectangle délimité par les attributs width et height de la balise. C'est ce rectangle que l'on appelle le <b>viewport</b>.
+                un rectangle délimité par les attributs <i lang="en">width</i> et <i lang="en">height</i> de la balise. C'est ce rectangle que l'on appelle le <b><i lang="en">viewport</i></b>.
                 <br>Il faut voir ça comme un écran de télévision, celui-ci
                 délimitant une zone d'affichage convenue, alors qu'un plateau de télévision est bien sur plus vaste.<br>
                 Sans plus d'informations fournies par divers attributs, un système de coordonnées est mis en place, avec pour origine le coin supérieur
-                gauche du viewport.
+                gauche du <i lang="en">viewport</i>.
             </p>
 
-			<p>Pour commencer, les attributs width et height n'ont pas forcément besoin d'unités. Dans ce
+			<p>Pour commencer, les attributs <i lang="en">width</i> et <i lang="en">height</i> n'ont pas forcément besoin d'unités. Dans ce
 			cas de figure, c'est le système d'<b>unités de l'utilisateur</b> qui sera utilisé, soit le pixel.
 			<br>Vous pourrez aussi déterminer cette unité parmi les suivantes :</p>
 
@@ -46,7 +46,7 @@
 				em, ex, px, pt, pc, cm, mm, in, et %
 			</code>
 
-            <p>Je fais une petite pause pour évoquer un cas particulier : que ce passe-t-il si l'on omet ces attributs width et height ?</p>
+            <p>Je fais une petite pause pour évoquer un cas particulier : que ce passe-t-il si l'on omet ces attributs <i lang="en">width</i> et <i lang="en">height</i> ?</p>
 
             <code class="svgExemple_code">
                 &lt;svg&gt;<br>
@@ -63,13 +63,13 @@
                 <circle cx="50%" cy="150" r="25" fill="#6b84c1"/>
             </svg>
 
-            <p>Sans préciser de width et de height, on se retrouve vite face à une première difficulté : Firefox et Chrome créent un élément
-            de 300*150 pixels, tandis que Internet Explorer, Edge inclus, crée lui, un élément de 100% de largeur, pour 150px de hauteur.</p>
+            <p>Sans préciser de <i lang="en">width</i> et de height, on se retrouve vite face à une première difficulté : Firefox et Chrome créent un élément
+            de 300*150 pixels, tandis que Internet Explorer – Edge inclus – crée, lui, un élément de 100% de largeur, pour 150px de hauteur.</p>
 
-            <p>Pas la peine de prendre de risques, une bonne pratique sera de spécifier une largeur et une hauteur, que ce soit en css
-            ou directement sur la balise svg. C'est ce que je ferais pour les exemples qui vont suivre.</p>
+            <p>Pas la peine de prendre de risques : une bonne pratique sera de spécifier une largeur et une hauteur, que ce soit en css
+            ou directement sur la balise svg. C'est ce que je ferai pour les exemples qui vont suivre.</p>
 
-            <p>Néanmoins, pas de surprise concernant le système de coordonnées, on a bien précisé que le centre du cercle bleu était à x=50 et y=50,
+            <p>Néanmoins, pas de surprise concernant le système de coordonnées : on a bien précisé que le centre du cercle bleu était à x=50 et y=50,
                 et visuellement on retrouve bien exactement ce résultat.</p>
 
             <p>Maintenant, on va voir comment jouer avec ces coordonnées.</p>
@@ -85,7 +85,7 @@
 
             <p>Ces 4 paramètres n'ont pas d'unités et vont permettre de définir un rectangle qui va redéfinir le système de coordonnées du viewport.
                 Et c'est là que les choses deviennent intéressantes.
-                L'<b>échelle</b> (<b>scale</b>) pourra être modifiée et être supérieure ou inférieure à la valeur de base 1:1, mais toujours de façon à faire rentrer,
+                L'<b>échelle</b> (<b><i lang="en">scale</i></b>) pourra être modifiée et être supérieure ou inférieure à la valeur de base 1:1, mais toujours de façon à faire rentrer,
                 ou plutôt à contraindre, le viewbox dans le viewport.</p>
 
             <p>Petit aparté visuel sur les bordures des exemples qui vont suivre, pour mieux comprendre mes propos :
@@ -131,7 +131,7 @@
                         </code>
                         <p>Cette fois le viewbox représente 2x le viewport. Il en résulte donc une surface d'affichage 2x fois plus large,
                         mais toujours dans le même viewport. L'échelle est donc inférieure, ici 1:2, les cercles apparaissent 2 fois plus petits,
-                        et le rose est cette fois visible</p>
+                        et le rose est cette fois visible.</p>
                     </td>
                 </tr>
                 <tr class="svgExemple_line">
@@ -193,7 +193,7 @@
                             &lt;svg width="150" height="150" viewbox="0 0 200 300" /&gt;
                         </code>
                         <p>Sur cet exemple, l'échelle a été modifiée, puisque ni la largeur, ni la hauteur du viewbox ne correspondait au viewport.
-                        Par contre le ratio entre l'axe x et y reste le même, le rond n'est toujours pas déformé, et on peut se rendre compte que
+                        Par contre, le ratio entre l'axe x et y reste le même, le rond n'est toujours pas déformé, et on peut se rendre compte que
                             cette fois, le viewbox est centré horizontalement dans le viewport.</p>
                     </td>
                 </tr>
@@ -202,7 +202,7 @@
 
             <h3>La translation</h3>
 
-            <p>Jusqu'à maintenant, on n'avait pas modifié min-x, et min-y. Et bien c'est parti.</p>
+            <p>Jusqu'à maintenant, on n'avait pas modifié min-x, et min-y. Et bien c'est parti!</p>
 
             <table class="svgExemple_table">
                 <tr class="svgExemple_line">
@@ -237,8 +237,8 @@
                         <code class="svgExemple_code">
                             &lt;svg width="150" height="150" viewbox="50 50 300 300" /&gt;
                         </code>
-                        <p>Dans ce cas, et comme déjà vu un peu plus haut, la zone d'affichage est 2 fois plus grande, vu que l'échelle est devenue plus petite.
-                        La translation est également là, mais paraît 2 fois moins importante. Visuellement, c'est le cas.<br>
+                        <p>Dans ce cas, et comme déjà vu un peu plus haut, la zone d'affichage est deux fois plus grande, vu que l'échelle est devenue plus petite.
+                        La translation est également là, mais paraît deux fois moins importante. Visuellement, c'est le cas.<br>
                         Ce qui se passe, c'est que l'échelle est modifiée en premier, et la translation s'effectue sur cette nouvelle échelle. Visuellement,
                         on voit bien un décalage de 25 pixels correspondant aux informations renseignées dans l'attribut viewbox.</p>
                     </td>
@@ -277,7 +277,7 @@
 
             <h3>Le paramètre align</h3>
 
-            <p>&lt;align&gt; peut prendre come valeur l'une des dix suivantes : "none", "xMinYMin", "xMinYMid", "xMinYMax", "xMidYMin", "xMidYMid", "xMidYMax"
+            <p>&lt;align&gt; peut prendre comme valeur l'une des dix suivantes : "none", "xMinYMin", "xMinYMid", "xMinYMax", "xMidYMin", "xMidYMid", "xMidYMax"
                 , "xMaxYMin", "xMaxYMid", "xMaxYMax". À part "none", ces valeurs vont permettre d'aligner le viewbox dans le viewport.</p>
 
             <table class="svgExemple_table">
@@ -356,15 +356,15 @@
                         </code>
                         <p>En reprenant l'exemple précédent, mais en précisant un preserveAspectRatio à xMidYMax, le viewbox est centré horizontalement.
                             xMidYMin et xMidYMid produiront le même effet.
-                            <br>Sur ce cas, on pourrait bien sur carrément enlever l'attribut, car comme vu sur les exemples de la partie viewbox,
+                            <br>Sur ce cas, on pourrait bien sûr carrément enlever l'attribut, car comme vu sur les exemples de la partie viewbox,
                             avoir ce dernier centré est le comportement par défaut.
                         </p>
                     </td>
                 </tr>
             </table>
 
-            <p>Pas la peine d'illustrer tous les cas de figure, les exemples sont suffisamment parlant concernant l'alignement en "Min" ou en "Max".
-            Par contre l'intérêt de "Mid" est plutôt limité pour le moment.</p>
+            <p>Pas la peine d'illustrer tous les cas de figure, les exemples sont suffisamment parlants concernant l'alignement en "Min" ou en "Max".
+            Par contre, l'intérêt de "Mid" est plutôt limité pour le moment.</p>
 
             <p>Mais c'est là que &lt;meetOrSlice&gt; va rentrer en jeu.</p>
 
@@ -428,7 +428,7 @@
                         <code class="svgExemple_code">
                             &lt;svg width="150" height="150" viewbox="0 0 300 150" preserveAspectRatio="xMidYMin slice" /&gt;
                         </code>
-                        <p>3ème cas de figure, xMidYMin va permettre de centrer le viewbox horizontalement, car le
+                        <p>Troisième cas de figure, xMidYMin va permettre de centrer le viewbox horizontalement, car le
                             viewbox est plus long que le viewport.
                         <br>De la même façon, xMidYMid et xMidYMax auront visuellement le même résultat.</p>
                     </td>
@@ -461,15 +461,15 @@
 
             <p>
                 Ça y est, nous voilà à la fin de cet article.<br>
-                Bien comprendre les coordonnées est important et permet de plus facilement travailler avec les svgs exportés
+                Bien comprendre les coordonnées est important et permet de plus facilement travailler avec les SVGs exportés
                 par différents logiciels.
                 Cela permet aussi de résoudre des problématiques simples comme :
             </p>
             <ul>
-                <li>Mon svg est bien présent dans la page, mais rien ne s'affiche.</li>
-                <li>Je n'ai qu'une partie du svg d'affichée, et en plus celle-ci à l'air d'être zoomée.</li>
+                <li>Mon SVG est bien présent dans la page, mais rien ne s'affiche.</li>
+                <li>Je n'ai qu'une partie du SVG d'affichée, et en plus celle-ci à l'air d'être zoomée.</li>
             </ul>
-            <p>Un peu de lecture complémentaire pour finir:</p>
+            <p>Un peu de lecture complémentaire pour finir :</p>
             <ul>
                 <li><a href="https://www.w3.org/TR/SVG/coords.html">La spec officielle</a> du W3C (en)</li>
                 <li><a href="http://tutorials.jenkov.com/svg/svg-viewport-view-box.html">SVG Viewport and View Box</a> de Jakob Jenkov (en)</li>
